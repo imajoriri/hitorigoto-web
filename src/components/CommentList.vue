@@ -6,8 +6,8 @@
         :enable="false"
         :read-only="true"
         theme=""
-        :content="chat.delta"
-        content-type="delta"
+        :content="chat.html"
+        content-type="html"
       />
     </div>
   </div>

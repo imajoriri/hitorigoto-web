@@ -17,8 +17,8 @@ export default defineComponent({
     const submit = () => {
       if (myEditor.value) {
         const val = myEditor.value;
-        const delta = val.getContents();
-        content.emit("submit", delta);
+        const html = val.getHTML();
+        content.emit("submit", html);
         val.setText("");
       }
     };

@@ -1,11 +1,9 @@
-import { Delta } from "@vueup/vue-quill";
-
 export default class Chat {
-  readonly delta: Delta;
+  readonly html: string;
   readonly createdAt: Date;
 
-  constructor(init: { delta: Delta; createdAt: Date }) {
-    this.delta = init.delta;
+  constructor(init: { html: string; createdAt: Date }) {
+    this.html = init.html;
     this.createdAt = init.createdAt;
   }
 }
