@@ -6,6 +6,8 @@ import vuetify from "./plugins/vuetify";
 import { loadFonts } from "./plugins/webfontloader";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import ElementPlus from "element-plus";
+import "element-plus/dist/index.css";
 
 loadFonts();
 
@@ -13,5 +15,6 @@ createApp(App)
   .use(router)
   .use(store)
   .use(vuetify)
+  .use(ElementPlus)
   .component("QuillEditor", QuillEditor)
   .mount("#app");

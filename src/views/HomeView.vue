@@ -49,6 +49,8 @@ export default defineComponent({
     };
     const deleteClick = (index: number) => {
       memos.value.splice(index, 1);
+      const json = JSON.stringify(memos.value);
+      localStorage.setItem("key_name", json);
     };
     const memoChange = (index: number, html: string) => {
       memos.value[index] = html;
@@ -80,6 +82,7 @@ export default defineComponent({
   display: flex;
   justify-content: flex-end;
   &__main {
+    overflow: scroll;
     flex-grow: 1;
     margin-bottom: 4px;
     display: flex;

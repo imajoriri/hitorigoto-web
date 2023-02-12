@@ -7,15 +7,9 @@
       contentType="html"
       :content="html"
     />
-    <v-btn
-      class="memoInput__delete"
-      variant="outlined"
-      color="error"
-      size="small"
-      @click="deleteClick"
-    >
-      <v-icon icon="mdi-delete"></v-icon>
-    </v-btn>
+    <el-button plain @click="deleteClick" class="memoInput__delete" size="small"
+      ><v-icon icon="mdi-delete"></v-icon
+    ></el-button>
   </div>
 </template>
 
@@ -53,11 +47,16 @@ export default defineComponent({
 
 <style lang="scss">
 .memoInput {
-  border-left: 1px solid grey;
+  border-left: 1px solid $color-main;
+  padding: 4px;
   &__delete {
-    bottom: 30px;
+    bottom: 26px;
+    position: relative;
     float: right;
     margin-right: 4px;
+    color: $color-main;
+    width: 40px;
+    color: $color-main;
   }
 }
 </style>

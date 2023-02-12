@@ -3,6 +3,7 @@
     <div v-for="chat in chats" :key="chat.createdAt.toDateString()">
       <div class="commentList__time">1/23 16:32</div>
       <QuillEditor
+        class="commentList__editor"
         :enable="false"
         :read-only="true"
         theme=""
@@ -30,9 +31,14 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .commentList {
+  padding: 4px;
   text-align: start;
   &__time {
     font-size: 12px;
+    color: grey;
+  }
+  &__editor {
+    padding: 0 !important;
   }
 }
 </style>
