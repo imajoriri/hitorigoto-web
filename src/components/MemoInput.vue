@@ -1,11 +1,12 @@
 <template>
   <div class="memoInput">
     <QuillEditor
-      theme=""
+      theme="bubble"
       @update:content="update"
       ref="myEditor"
       contentType="html"
       :content="html"
+      toolbar="essential"
     />
     <el-button plain @click="deleteClick" class="memoInput__delete" size="small"
       ><v-icon icon="mdi-delete"></v-icon

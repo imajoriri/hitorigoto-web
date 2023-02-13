@@ -1,7 +1,11 @@
 <template>
   <div class="chatInput">
     <div class="chatInput__editor">
-      <QuillEditor theme="snow" ref="myEditor" class="chatInput__quillEditor" />
+      <QuillEditor
+        theme="bubble"
+        ref="myEditor"
+        class="chatInput__quillEditor"
+      />
     </div>
     <button @click="submit()" class="chatInput__submit">
       <v-icon icon="mdi-send"></v-icon>
@@ -50,9 +54,11 @@ export default defineComponent({
   &__editor {
     width: 100%;
     margin-right: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
   }
   &__quillEditor {
-    padding: 8px;
+    padding: 12px;
   }
   &__submit {
     background-color: $color-main;

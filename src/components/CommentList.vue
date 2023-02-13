@@ -31,8 +31,9 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .commentList {
-  padding: 4px;
+  padding: 8px;
   text-align: start;
+  overflow: auto;
   &__time {
     font-size: 12px;
     color: grey;

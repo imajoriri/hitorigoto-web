@@ -7,7 +7,10 @@
       </v-btn>
     </header>
     <div class="home__main">
-      <comment-list :chats="chats" class="home__main__cell" />
+      <div class="home__main__cell home__chat">
+        <comment-list :chats="chats" />
+        <chat-input @submit="chatSubmit" />
+      </div>
       <memo-input
         v-for="(memo, index) in memos"
         :key="index.toString()"
@@ -16,9 +19,6 @@
         @delete-click="deleteClick(index)"
         @text-change="(html) => memoChange(index, html)"
       />
-    </div>
-    <div>
-      <chat-input @submit="chatSubmit" />
     </div>
   </div>
 </template>
@@ -76,6 +76,11 @@ export default defineComponent({
     display: flex;
     flex-direction: row-reverse;
     margin: 4px;
+  }
+  &__chat {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
   height: 100vh;
   flex-flow: column;
