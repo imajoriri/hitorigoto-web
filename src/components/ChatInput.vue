@@ -58,7 +58,7 @@ export default defineComponent({
     border-radius: 4px;
   }
   &__quillEditor {
-    padding: 12px;
+    padding: 8px;
   }
   &__submit {
     background-color: $color-main;
