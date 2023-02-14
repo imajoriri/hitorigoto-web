@@ -72,6 +72,16 @@ export default defineComponent({
 
 <style lang="scss">
 .home {
+  height: 100%;
+  flex-flow: column;
+  display: flex;
+  justify-content: flex-end;
+  // ページ全体をスクロールできないようにする
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
   &__header {
     display: flex;
     flex-direction: row-reverse;
@@ -82,10 +92,6 @@ export default defineComponent({
     flex-direction: column;
     justify-content: flex-end;
   }
-  height: 100vh;
-  flex-flow: column;
-  display: flex;
-  justify-content: flex-end;
   &__main {
     overflow: scroll;
     flex-grow: 1;

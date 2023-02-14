@@ -1,12 +1,11 @@
 <template>
   <div class="chatInput">
-    <div class="chatInput__editor">
-      <QuillEditor
-        theme="bubble"
-        ref="myEditor"
-        class="chatInput__quillEditor"
-      />
-    </div>
+    <QuillEditor
+      theme="bubble"
+      ref="myEditor"
+      class="chatInputEditor"
+      placeholder="なんでも、独り言をどうぞ"
+    />
     <button @click="submit()" class="chatInput__submit">
       <v-icon icon="mdi-send"></v-icon>
     </button>
@@ -48,15 +47,9 @@ export default defineComponent({
 
 <style lang="scss">
 .chatInput {
-  margin: 0 8px 8px 8px;
+  margin: 0 4px 4px 4px;
   display: flex;
   align-items: flex-end;
-  &__editor {
-    width: 100%;
-    margin-right: 8px;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-  }
   &__quillEditor {
     padding: 8px;
   }
@@ -68,5 +61,15 @@ export default defineComponent({
     color: white;
     font-size: 12px;
   }
+}
+
+// input
+.chatInputEditor.ql-container {
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  height: auto !important;
+  padding: 8px;
+  width: 100%;
+  margin-right: 4px;
 }
 </style>
