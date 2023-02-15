@@ -31,14 +31,14 @@ export default defineComponent({
       return keyEvent.key === "Enter" && (keyEvent.ctrlKey || keyEvent.metaKey);
     };
     onMounted(() => {
-      document.onkeydown = (e) => {
+      document.addEventListener("keydown", (e) => {
         if (myEditor.value) {
           const hasFocus = myEditor.value.getQuill().hasFocus();
           if (hasFocus && isPressedSubmitKey(e)) {
             submit();
           }
         }
-      };
+      });
     });
     return { myEditor, submit };
   },

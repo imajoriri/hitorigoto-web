@@ -11,7 +11,7 @@
         <comment-list :chats="chats" />
         <chat-input @submit="chatSubmit" />
       </div>
-      <memo-input
+      <channel-row
         v-for="(memo, index) in memos"
         :key="index.toString()"
         :html="memo"
@@ -24,15 +24,15 @@
 </template>
 
 <script lang="ts">
+import ChannelRow from "@/components/channelRow.vue";
 import ChatInput from "@/components/ChatInput.vue";
 import CommentList from "@/components/CommentList.vue";
-import MemoInput from "@/components/MemoInput.vue";
 import Chat from "@/models/chat";
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "HomeView",
-  components: { CommentList, MemoInput, ChatInput },
+  components: { CommentList, ChatInput, ChannelRow },
   setup() {
     const memos = ref<string[]>([]);
     const chats = ref<Chat[]>([]);
