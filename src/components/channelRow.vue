@@ -20,19 +20,14 @@
       toolbar="essential"
       placeholder="なんでもどうぞ。チェックリストも作れます"
     />
-    <div class="channelChatText">
-      <!--ここに chat text-->
-      <div v-for="chat in chats" :key="chat.createdAt.toDateString()">
-        <div class="channelChatTextDate">1/23 16:32</div>
-        <QuillEditor
-          :enable="false"
-          :read-only="true"
-          theme=""
-          :content="chat.html"
-          content-type="html"
-        />
-      </div>
-    </div>
+    <QuillEditor
+      class="channelChatText"
+      :enable="false"
+      :read-only="true"
+      theme=""
+      :content="chatHtml"
+      content-type="html"
+    />
     <div class="channelChatInputArea">
       <QuillEditor
         class="channnelChatEditor"
@@ -48,7 +43,6 @@
 </template>
 
 <script lang="ts">
-import Chat from "@/models/chat";
 import { QuillEditor } from "@vueup/vue-quill";
 import { defineComponent, onMounted, ref } from "vue";
 
@@ -74,15 +68,14 @@ export default defineComponent({
     };
 
     // chat周り
-    const chats = ref<Chat[]>([]);
+    const chatHtml = ref<string>("");
     const channelChatEditor = ref(QuillEditor);
     // chatの送信ボタン処理
     const submitChat = () => {
       if (channelChatEditor.value) {
         const val = channelChatEditor.value;
         const html = val.getHTML();
-        const chat = new Chat({ html: html, createdAt: new Date() });
-        chats.value.push(chat);
+        chatHtml.value += html;
         val.setText("");
       }
     };
@@ -105,7 +98,7 @@ export default defineComponent({
       channelMemoEditor,
       channelChatEditor,
       submitChat,
-      chats,
+      chatHtml,
     };
   },
 });
@@ -170,9 +163,9 @@ export default defineComponent({
   margin-bottom: 4px;
   overflow: scroll;
 }
-.channelChatTextDate {
-  font-size: 12px;
-  height: 14px;
-  color: grey;
+.channelChatText .ql-editor {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 </style>

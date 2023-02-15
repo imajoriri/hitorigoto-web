@@ -1,17 +1,13 @@
 <template>
   <div class="chatRow">
-    <div class="commentList">
-      <div v-for="chat in chats" :key="chat.createdAt.toDateString()">
-        <div class="commentList__time">1/23 16:32</div>
-        <QuillEditor
-          class="commentList__editor"
-          :enable="false"
-          :read-only="true"
-          theme=""
-          :content="chat.html"
-          content-type="html"
-        />
-      </div>
+    <div class="chatText">
+      <QuillEditor
+        :enable="false"
+        :read-only="true"
+        theme=""
+        :content="chatHtml"
+        content-type="html"
+      />
     </div>
     <div class="chatInput">
       <QuillEditor
@@ -29,18 +25,17 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
 import { QuillEditor } from "@vueup/vue-quill";
-import Chat from "@/models/chat";
 
 export default defineComponent({
   components: {},
   setup() {
-    const chats = ref<Chat[]>([]);
+    const chatHtml = ref<string>("");
     const myEditor = ref(QuillEditor);
     const submit = () => {
       if (myEditor.value) {
         const val = myEditor.value;
         const html = val.getHTML();
-        chats.value.push(new Chat({ html: html, createdAt: new Date() }));
+        chatHtml.value += html;
         val.setText("");
       }
     };
@@ -57,7 +52,7 @@ export default defineComponent({
         }
       });
     });
-    return { myEditor, submit, chats };
+    return { myEditor, submit, chatHtml };
   },
 });
 </script>
@@ -98,16 +93,9 @@ export default defineComponent({
 }
 
 // comment
-.commentList {
+.chatText {
   padding: 8px;
   text-align: start;
   overflow: auto;
-  &__time {
-    font-size: 12px;
-    color: grey;
-  }
-  &__editor {
-    padding: 0 !important;
-  }
 }
 </style>
