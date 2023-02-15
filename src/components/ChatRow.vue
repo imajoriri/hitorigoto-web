@@ -5,16 +5,17 @@
         :enable="false"
         :read-only="true"
         theme=""
-        :content="chatHtml"
+        :content="postHtml"
         content-type="html"
       />
     </div>
     <div class="chatInput">
       <QuillEditor
         theme="bubble"
-        ref="myEditor"
+        ref="chatInputEditor"
         class="chatInputEditor"
         placeholder="迷ったらここにどうぞ。アプリを閉じても保存されます。"
+        @update:content="updateChatInput"
       />
       <button @click="submit()" class="chatInput__submit">
         <v-icon icon="mdi-send"></v-icon>
@@ -29,13 +30,30 @@ import { QuillEditor } from "@vueup/vue-quill";
 export default defineComponent({
   components: {},
   setup() {
-    const chatHtml = ref<string>("");
-    const myEditor = ref(QuillEditor);
+    const postKey = "chat_post_html";
+    const inputKey = "chat_input_key";
+    const postHtml = ref<string>("");
+    const postHtmlLocalData = localStorage.getItem(postKey);
+    if (postHtmlLocalData) {
+      postHtml.value = postHtmlLocalData;
+    }
+
+    const chatInputEditor = ref(QuillEditor);
+    // inputのテキストが変更された時
+    const updateChatInput = () => {
+      if (chatInputEditor.value) {
+        const html = chatInputEditor.value.getHTML();
+        localStorage.setItem(inputKey, html);
+      }
+    };
+    // submitされた時
     const submit = () => {
-      if (myEditor.value) {
-        const val = myEditor.value;
+      if (chatInputEditor.value) {
+        const val = chatInputEditor.value;
         const html = val.getHTML();
-        chatHtml.value += html;
+        postHtml.value += html;
+        localStorage.setItem(postKey, postHtml.value);
+        localStorage.setItem(inputKey, "");
         val.setText("");
       }
     };
@@ -43,16 +61,21 @@ export default defineComponent({
       return keyEvent.key === "Enter" && (keyEvent.ctrlKey || keyEvent.metaKey);
     };
     onMounted(() => {
+      const chatInputHtmlLocalData = localStorage.getItem(inputKey);
+      if (chatInputHtmlLocalData) {
+        chatInputEditor.value.setHTML(chatInputHtmlLocalData);
+      }
       document.addEventListener("keydown", (e) => {
-        if (myEditor.value) {
-          const hasFocus = myEditor.value.getQuill().hasFocus();
+        if (chatInputEditor.value) {
+          const hasFocus = chatInputEditor.value.getQuill().hasFocus();
           if (hasFocus && isPressedSubmitKey(e)) {
             submit();
           }
         }
       });
     });
-    return { myEditor, submit, chatHtml };
+
+    return { chatInputEditor, submit, postHtml, updateChatInput };
   },
 });
 </script>
