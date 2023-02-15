@@ -1,39 +1,47 @@
 <template>
   <div class="channel">
     <div class="channelHeader">
+      <!-- 削除ボタン -->
       <el-button
         plain
-        @click="deleteClick"
+        @click="() => deleteClick()"
         class="channelDelete"
         size="small"
         text
         ><v-icon icon="mdi-close"></v-icon
       ></el-button>
     </div>
+
+    <!-- メモ -->
     <QuillEditor
       class="channnelMemoEditor"
       theme="bubble"
-      @update:content="updatedMemo"
-      ref="channelMemoEditor"
+      @update:content="updated"
+      ref="memoEditor"
       contentType="html"
-      :content="html"
+      :content="channel.memoHtml"
       toolbar="essential"
       placeholder="なんでもどうぞ。チェックリストも作れます"
     />
+    <!-- post -->
     <QuillEditor
       class="channelChatText"
       :enable="false"
       :read-only="true"
       theme=""
-      :content="chatHtml"
+      :content="postHTML"
       content-type="html"
     />
+    <!-- input -->
     <div class="channelChatInputArea">
       <QuillEditor
+        @update:content="updated"
         class="channnelChatEditor"
-        ref="channelChatEditor"
+        ref="inputEditor"
         theme="bubble"
         placeholder="独り言をどうぞ。アプリを閉じても保存してます。"
+        contentType="html"
+        :content="channel.inputHtml"
       />
       <button class="channelChatSubmitButton" @click="submitChat">
         <v-icon icon="mdi-send"></v-icon>
@@ -43,49 +51,56 @@
 </template>
 
 <script lang="ts">
+import Channel from "@/models/channel";
 import { QuillEditor } from "@vueup/vue-quill";
 import { defineComponent, onMounted, ref } from "vue";
 
 export default defineComponent({
   components: {},
   props: {
-    html: {
-      type: String,
-      required: false,
+    channel: {
+      type: Channel,
+      required: true,
+    },
+    deleteClick: {
+      type: Function,
+      required: true,
+    },
+    textChange: {
+      type: Function as unknown as () => (channel: Channel) => void,
+      required: true,
     },
   },
-  setup(_, content) {
-    // memo周り
-    const channelMemoEditor = ref(QuillEditor);
-    const updatedMemo = () => {
-      if (channelMemoEditor.value) {
-        const html = channelMemoEditor.value.getHTML();
-        content.emit("text-change", html);
-      }
-    };
-    const deleteClick = () => {
-      content.emit("delete-click");
+  setup(prop) {
+    const memoEditor = ref(QuillEditor);
+    const postHTML = ref<string>(prop.channel.postHtml);
+    const inputEditor = ref(QuillEditor);
+
+    // memo, post, chatの更新処理が走った時
+    const updated = () => {
+      const channel = new Channel({
+        memoHtml: memoEditor.value.getHTML(),
+        inputHtml: inputEditor.value.getHTML(),
+        postHtml: postHTML.value,
+      });
+      prop.textChange(channel);
     };
 
     // chat周り
-    const chatHtml = ref<string>("");
-    const channelChatEditor = ref(QuillEditor);
     // chatの送信ボタン処理
     const submitChat = () => {
-      if (channelChatEditor.value) {
-        const val = channelChatEditor.value;
-        const html = val.getHTML();
-        chatHtml.value += html;
-        val.setText("");
-      }
+      const val = inputEditor.value;
+      const html = val.getHTML();
+      postHTML.value += html;
+      val.setText("");
     };
     const isPressedSubmitKey = (keyEvent: KeyboardEvent) => {
       return keyEvent.key === "Enter" && (keyEvent.ctrlKey || keyEvent.metaKey);
     };
     onMounted(() => {
       document.addEventListener("keydown", (e) => {
-        if (channelChatEditor.value) {
-          const hasFocus = channelChatEditor.value.getQuill().hasFocus();
+        if (inputEditor.value) {
+          const hasFocus = inputEditor.value.getQuill().hasFocus();
           if (hasFocus && isPressedSubmitKey(e)) {
             submitChat();
           }
@@ -93,12 +108,11 @@ export default defineComponent({
       });
     });
     return {
-      deleteClick,
-      updatedMemo,
-      channelMemoEditor,
-      channelChatEditor,
+      updated,
+      memoEditor,
+      inputEditor,
       submitChat,
-      chatHtml,
+      postHTML,
     };
   },
 });

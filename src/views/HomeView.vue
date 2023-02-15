@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <header class="home__header">
-      <v-btn variant="outlined" color="primary" size="small" @click="addMemo">
+      <v-btn variant="outlined" color="primary" size="small" @click="add">
         Add memo
         <v-icon icon="mdi-plus"></v-icon>
       </v-btn>
@@ -9,12 +9,12 @@
     <div class="home__main">
       <chat-row class="home__main__cell" />
       <channel-row
-        v-for="(memo, index) in memos"
-        :key="index.toString()"
-        :html="memo"
+        v-for="(channel, index) in channels"
+        :key="channel.memoHtml.toString()"
+        :channel="channel"
         class="home__main__cell"
-        @delete-click="deleteClick(index)"
-        @text-change="(html) => memoChange(index, html)"
+        :delete-click="() => deleteMemo(index)"
+        :text-change="(channel) => memoChange(index, channel)"
       />
     </div>
   </div>
@@ -23,36 +23,53 @@
 <script lang="ts">
 import ChannelRow from "@/components/channelRow.vue";
 import ChatRow from "@/components/ChatRow.vue";
+import Channel from "@/models/channel";
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "HomeView",
   components: { ChannelRow, ChatRow },
   setup() {
-    const memos = ref<string[]>([]);
-    const json = localStorage.getItem("key_name");
-    if (json) {
-      const array = JSON.parse(json);
-      memos.value = array;
+    const channels = ref<Channel[]>([]);
+    const stringData = localStorage.getItem("channels-deta");
+    console.log(stringData);
+    if (stringData) {
+      const json = JSON.parse(stringData);
+      if (json instanceof Array) {
+        channels.value = json.map(
+          (e) =>
+            new Channel({
+              memoHtml: e.memoHtml,
+              postHtml: e.postHtml,
+              inputHtml: e.inputHtml,
+            })
+        );
+      }
     }
-    const addMemo = () => {
-      memos.value.push("");
+    // プラスボタン押した時
+    const add = () => {
+      channels.value.push(
+        new Channel({ memoHtml: "", postHtml: "", inputHtml: "" })
+      );
     };
-    const deleteClick = (index: number) => {
-      memos.value.splice(index, 1);
-      const json = JSON.stringify(memos.value);
-      localStorage.setItem("key_name", json);
+
+    // 削除ボタン押した時
+    const deleteMemo = (index: number) => {
+      channels.value.splice(index, 1);
     };
-    const memoChange = (index: number, html: string) => {
-      memos.value[index] = html;
-      const json = JSON.stringify(memos.value);
-      localStorage.setItem("key_name", json);
+
+    // memoが変更された時
+    const memoChange = (index: number, channel: Channel) => {
+      const newChannels = channels.value.slice(0, channels.value.length);
+      newChannels[index] = channel;
+      console.log(newChannels[index]);
+      localStorage.setItem("channels-deta", JSON.stringify(newChannels));
     };
 
     return {
-      memos,
-      addMemo,
-      deleteClick,
+      channels,
+      add,
+      deleteMemo,
       memoChange,
     };
   },
