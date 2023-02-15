@@ -18,7 +18,7 @@
       contentType="html"
       :content="html"
       toolbar="essential"
-      placeholder="整理途中のメモはここに"
+      placeholder="なんでもどうぞ。チェックリストも作れます"
     />
     <div class="channelChatText">
       <!--ここに chat text-->
@@ -38,7 +38,7 @@
         class="channnelChatEditor"
         ref="channelChatEditor"
         theme="bubble"
-        placeholder="一時的なメモはここに"
+        placeholder="独り言をどうぞ。アプリを閉じても保存してます。"
       />
       <button class="channelChatSubmitButton" @click="submitChat">
         <v-icon icon="mdi-send"></v-icon>

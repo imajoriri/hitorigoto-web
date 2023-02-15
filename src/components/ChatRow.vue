@@ -18,7 +18,7 @@
         theme="bubble"
         ref="myEditor"
         class="chatInputEditor"
-        placeholder="なんでも、独り言をどうぞ"
+        placeholder="迷ったらここにどうぞ。アプリを閉じても保存されます。"
       />
       <button @click="submit()" class="chatInput__submit">
         <v-icon icon="mdi-send"></v-icon>
