@@ -7,10 +7,7 @@
       </v-btn>
     </header>
     <div class="home__main">
-      <div class="home__main__cell home__chat">
-        <comment-list :chats="chats" />
-        <chat-input @submit="chatSubmit" />
-      </div>
+      <chat-row class="home__main__cell" />
       <channel-row
         v-for="(memo, index) in memos"
         :key="index.toString()"
@@ -25,25 +22,20 @@
 
 <script lang="ts">
 import ChannelRow from "@/components/channelRow.vue";
-import ChatInput from "@/components/ChatInput.vue";
-import CommentList from "@/components/CommentList.vue";
+import ChatRow from "@/components/ChatRow.vue";
 import Chat from "@/models/chat";
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "HomeView",
-  components: { CommentList, ChatInput, ChannelRow },
+  components: { ChannelRow, ChatRow },
   setup() {
     const memos = ref<string[]>([]);
-    const chats = ref<Chat[]>([]);
     const json = localStorage.getItem("key_name");
     if (json) {
       const array = JSON.parse(json);
       memos.value = array;
     }
-    const chatSubmit = (html: string) => {
-      chats.value.push(new Chat({ html: html, createdAt: new Date() }));
-    };
     const addMemo = () => {
       memos.value.push("");
     };
@@ -59,9 +51,7 @@ export default defineComponent({
     };
 
     return {
-      chats,
       memos,
-      chatSubmit,
       addMemo,
       deleteClick,
       memoChange,
@@ -87,11 +77,7 @@ export default defineComponent({
     flex-direction: row-reverse;
     margin: 4px;
   }
-  &__chat {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
+
   &__main {
     overflow: scroll;
     flex-grow: 1;
