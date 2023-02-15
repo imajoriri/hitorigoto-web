@@ -23,7 +23,6 @@
 <script lang="ts">
 import ChannelRow from "@/components/channelRow.vue";
 import ChatRow from "@/components/ChatRow.vue";
-import Chat from "@/models/chat";
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({

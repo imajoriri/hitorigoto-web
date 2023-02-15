@@ -165,7 +165,8 @@ export default defineComponent({
   flex-grow: 1;
   margin-top: 4px;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
+  justify-content: flex-end;
   margin-bottom: 4px;
   overflow: scroll;
 }
