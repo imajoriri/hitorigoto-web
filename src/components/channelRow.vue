@@ -93,6 +93,7 @@ export default defineComponent({
       const html = val.getHTML();
       postHTML.value += html;
       val.setText("");
+      updated();
     };
     const isPressedSubmitKey = (keyEvent: KeyboardEvent) => {
       return keyEvent.key === "Enter" && (keyEvent.ctrlKey || keyEvent.metaKey);

@@ -32,7 +32,6 @@ export default defineComponent({
   setup() {
     const channels = ref<Channel[]>([]);
     const stringData = localStorage.getItem("channels-deta");
-    console.log(stringData);
     if (stringData) {
       const json = JSON.parse(stringData);
       if (json instanceof Array) {
