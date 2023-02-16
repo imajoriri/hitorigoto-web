@@ -100,14 +100,16 @@ export default defineComponent({
 .threadView {
   display: flex;
   height: 100vh;
+  overflow: hidden;
 }
 .threadView div {
   width: 100%;
-  overflow: auto;
 }
 // main
 .threadMain {
   position: relative;
+  overflow: auto;
+  padding-bottom: 40px;
 }
 .threadMainChatInput {
   // stickyで下に固定している
