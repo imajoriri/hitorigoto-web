@@ -7,7 +7,10 @@
       </v-btn>
     </header>
     <div class="home__main">
-      <chat-row class="home__main__cell" />
+      <div class="home__main__cell chatAndTaskCell">
+        <task-row class="chatAndTaskCellRow" />
+        <chat-row class="chatAndTaskCellRow" />
+      </div>
       <channel-row
         v-for="(channel, index) in channels"
         :key="channel.memoHtml.toString()"
@@ -23,12 +26,13 @@
 <script lang="ts">
 import ChannelRow from "@/components/channelRow.vue";
 import ChatRow from "@/components/ChatRow.vue";
+import TaskRow from "@/components/TaskRow.vue";
 import Channel from "@/models/channel";
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "HomeView",
-  components: { ChannelRow, ChatRow },
+  components: { ChannelRow, ChatRow, TaskRow },
   setup() {
     const channels = ref<Channel[]>([]);
     const stringData = localStorage.getItem("channels-deta");
@@ -102,5 +106,12 @@ export default defineComponent({
       width: 100%;
     }
   }
+}
+.chatAndTaskCell {
+  display: flex;
+  flex-direction: column;
+}
+.chatAndTaskCellRow {
+  height: 50%;
 }
 </style>
