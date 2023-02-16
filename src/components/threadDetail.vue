@@ -13,6 +13,7 @@
     </div>
     <QuillEditor
       theme="bubble"
+      toolbar="essential"
       ref="editor"
       contentType="html"
       :content="bodyHtml"

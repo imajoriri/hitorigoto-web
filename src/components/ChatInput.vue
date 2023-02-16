@@ -2,6 +2,7 @@
   <div class="chatInput">
     <QuillEditor
       theme="bubble"
+      toolbar="essential"
       ref="myEditor"
       class="chatInputEditor"
       placeholder="なんでも、独り言をどうぞ"

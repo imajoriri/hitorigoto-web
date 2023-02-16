@@ -4,7 +4,7 @@
       <div v-for="(thread, index) in threads" :key="thread.bodyHTML">
         <thread-row
           :body-html="thread.bodyHTML"
-          @click="clickThreadRow(index)"
+          @open="clickThreadRow(index)"
         />
       </div>
       <chat-input @submit="addThread" />
@@ -70,6 +70,7 @@ export default defineComponent({
       saveThreads();
     };
     const clickThreadRow = (index: number) => {
+      if (openThreadIndexes.value.includes(index)) return;
       openThreadIndexes.value.push(index);
       saveOpenThreadIndexes();
     };

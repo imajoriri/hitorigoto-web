@@ -1,5 +1,6 @@
 <template>
   <div class="threadRow">
+    <el-button @click="() => open()" link type="primary">thread ></el-button>
     <QuillEditor
       :enable="false"
       :read-only="true"
@@ -10,7 +11,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   components: {},
@@ -20,8 +21,11 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
-    return {};
+  setup(_, content) {
+    const open = () => {
+      content.emit("open");
+    };
+    return { open };
   },
 });
 </script>
@@ -34,7 +38,4 @@ export default defineComponent({
   background-color: #f6f6f6 !important;
   cursor: pointer !important;
 }
-// .threadRow.ql-editor > * {
-//   cursor: pointer !important;
-// }
 </style>
