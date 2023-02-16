@@ -48,7 +48,6 @@ export default defineComponent({
 
 <style lang="scss">
 .chatInput {
-  margin: 0 4px 4px 4px;
   display: flex;
   align-items: flex-end;
   &__quillEditor {

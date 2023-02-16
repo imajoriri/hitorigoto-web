@@ -88,22 +88,22 @@ export default defineComponent({
 }
 
 // input
-.chatInput {
-  margin: 0 4px 4px 4px;
-  display: flex;
-  align-items: flex-end;
-  &__quillEditor {
-    padding: 8px;
-  }
-  &__submit {
-    background-color: $color-main;
-    width: 40px;
-    height: 24px;
-    border-radius: 4px;
-    color: white;
-    font-size: 12px;
-  }
-}
+// .chatInput {
+//   margin: 0 4px 4px 4px;
+//   display: flex;
+//   align-items: flex-end;
+//   &__quillEditor {
+//     padding: 8px;
+//   }
+//   &__submit {
+//     background-color: $color-main;
+//     width: 40px;
+//     height: 24px;
+//     border-radius: 4px;
+//     color: white;
+//     font-size: 12px;
+//   }
+// }
 
 // input
 .chatInputEditor.ql-container {

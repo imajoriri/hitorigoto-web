@@ -1,13 +1,15 @@
 <template>
   <div class="threadView">
-    <div :span="12" class="threadMain">
-      <div v-for="(thread, index) in threads" :key="thread.bodyHTML">
-        <thread-row
-          :body-html="thread.bodyHTML"
-          @open="clickThreadRow(index)"
-        />
+    <div class="threadMain">
+      <div class="threadMainPosts">
+        <div v-for="(thread, index) in threads" :key="thread.bodyHTML">
+          <thread-row
+            :body-html="thread.bodyHTML"
+            @open="clickThreadRow(index)"
+          />
+        </div>
       </div>
-      <chat-input @submit="addThread" />
+      <chat-input @submit="addThread" class="threadMainChatInput" />
     </div>
     <div
       v-for="(openThreadIndex, i) in openThreadIndexes"
@@ -96,17 +98,22 @@ export default defineComponent({
 
 <style lang="scss">
 .threadView {
-  height: 100%;
   display: flex;
+  height: 100vh;
 }
 .threadView div {
   width: 100%;
+  overflow: auto;
 }
+// main
 .threadMain {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 100%;
-  padding: 8px;
+  position: relative;
+}
+.threadMainChatInput {
+  // stickyで下に固定している
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+  padding: 0 8px 8px 8px;
 }
 </style>
