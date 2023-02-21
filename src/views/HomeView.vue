@@ -65,7 +65,6 @@ export default defineComponent({
     const memoChange = (index: number, channel: Channel) => {
       const newChannels = channels.value.slice(0, channels.value.length);
       newChannels[index] = channel;
-      console.log(newChannels[index]);
       localStorage.setItem("channels-deta", JSON.stringify(newChannels));
     };
 
@@ -79,7 +78,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .home {
   height: 100%;
   flex-flow: column;

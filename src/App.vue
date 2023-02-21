@@ -1,14 +1,5 @@
 <template>
   <router-view />
-  <!-- <v-app class="v-app">
-    <header>
-      <router-link to="/">home </router-link> |
-      <router-link to="/thread"> thread</router-link>
-    </header>
-    <v-main>
-      <router-view />
-    </v-main>
-  </v-app> -->
 </template>
 
 <script lang="ts">
@@ -25,9 +16,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
-// header {
-//   display: flex;
-//   z-index: 10000;
-// }
-</style>
+<style lang="scss"></style>

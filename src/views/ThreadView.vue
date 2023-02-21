@@ -109,11 +109,10 @@ export default defineComponent({
 .threadMain {
   position: relative;
   overflow: auto;
-  padding-bottom: 40px;
 }
 .threadMainChatInput {
   // stickyで下に固定している
-  position: fixed;
+  position: sticky;
   bottom: 0;
   background-color: white;
   padding: 0 8px 8px 8px;
