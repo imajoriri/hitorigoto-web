@@ -34,6 +34,7 @@
         </div>
         <QuillEditor
           theme="bubble"
+          :modules="modules"
           :toolbar="toolbar"
           ref="editors"
           @update:content="updateWipNote"
