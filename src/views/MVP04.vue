@@ -15,6 +15,8 @@
       <div class="note w-100">
         <QuillEditor
           theme="bubble"
+          :modules="modules"
+          :toolbar="toolbar"
           placeholder="迷ったらここにどうぞ。アプリを閉じても保存されます。"
           ref="noteEditor"
           @update:content="updateNote"
@@ -32,6 +34,7 @@
         </div>
         <QuillEditor
           theme="bubble"
+          :toolbar="toolbar"
           ref="editors"
           @update:content="updateWipNote"
         />
@@ -43,6 +46,7 @@
 <script lang="ts">
 import { QuillEditor } from "@vueup/vue-quill";
 import { defineComponent, onMounted, ref } from "vue";
+import MarkdownShortcuts from "quill-markdown-shortcuts";
 
 export default defineComponent({
   name: "MVP04",
@@ -90,6 +94,13 @@ export default defineComponent({
       const html = noteEditor.value.getHTML();
       localStorage.setItem(noteKey, html);
     };
+    const modules = {
+      name: "markdownShortcuts",
+      module: MarkdownShortcuts,
+      options: {
+        /* options */
+      },
+    };
     return {
       wipNoteIds,
       editors,
@@ -98,6 +109,13 @@ export default defineComponent({
       updateWipNote,
       updateNote,
       noteEditor,
+      toolbar: [
+        { header: [1, 2, 3, 4, 5] },
+        { list: "bullet" },
+        { list: "check" },
+        { list: "ordered" },
+      ],
+      modules,
     };
   },
 });
