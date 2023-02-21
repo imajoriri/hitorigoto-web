@@ -16,6 +16,8 @@
         <QuillEditor
           theme="bubble"
           placeholder="迷ったらここにどうぞ。アプリを閉じても保存されます。"
+          ref="noteEditor"
+          @update:content="updateNote"
         />
       </div>
       <div
@@ -45,12 +47,21 @@ import { defineComponent, onMounted, ref } from "vue";
 export default defineComponent({
   name: "MVP04",
   setup() {
+    // note
+    const noteKey = "note-key";
+    const noteEditor = ref(QuillEditor);
+
+    // wip
     const wipNoteKey = "wip-note-key";
     const editors = ref(QuillEditor);
     const jsonString = localStorage.getItem(wipNoteKey) ?? "[]";
     const json = JSON.parse(jsonString);
     const wipNoteIds = ref<string[]>(json.map(() => Math.random().toString()));
     onMounted(() => {
+      // note
+      const html = localStorage.getItem(noteKey);
+      noteEditor.value.setHTML(html);
+      // wip note
       wipNoteIds.value.forEach((e: string, index: number) => {
         editors.value[index].setHTML(json[index]);
       });
@@ -74,12 +85,19 @@ export default defineComponent({
       }
       localStorage.setItem(wipNoteKey, JSON.stringify(htmls));
     };
+
+    const updateNote = () => {
+      const html = noteEditor.value.getHTML();
+      localStorage.setItem(noteKey, html);
+    };
     return {
       wipNoteIds,
       editors,
       addWipNote,
       deleteWipNote,
       updateWipNote,
+      updateNote,
+      noteEditor,
     };
   },
 });
